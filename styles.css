@@ -1,0 +1,136 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+input {
+  display: none; /* Hide checkboxes visually */
+}
+
+/* Container Styles */
+.container {
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 35px;
+  position: relative;
+  margin: 40px 0;
+}
+
+h1::before {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background-color: crimson;
+  bottom: -10px;
+  left: 50%;
+  transform: translate(-50px);
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    width: 100px;
+  }
+  50% {
+    width: 200px;
+  }
+  100% {
+    width: 100px;
+  }
+}
+
+/* Top Content Styles */
+.top-content {
+  background-color: lightgray;
+  width: 90%;
+  margin: 0 auto 20px auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px lightgray;
+}
+
+h3 {
+  height: 100%;
+  background-color: lightgray;
+  line-height: 60px;
+  padding: 0 50px;
+  color: white;
+}
+
+/* Label Styles */
+label {
+  display: inline-block;
+  height: 100%;
+  margin: 0 20px;
+  line-height: 60px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+label:hover {
+  color: black;
+}
+
+/* Photo Gallery Styles */
+.photo-gallery {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.pic {
+  position: relative;
+  height: 230px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px lightgray;
+  cursor: pointer;
+  transition: 0.5s; /* Adjust transition for smooth filtering */
+  opacity: 1; /* Ensure all images are initially visible */
+}
+
+.pic img {
+  width: 100%;
+  height: 100%;
+  height: 230px;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.pic::before {
+  height: 100%;/* ... (unchanged hover effect for photo information) */
+}
+
+.pic:after {
+  margin-top: 0;
+    opacity: 1;/* ... (unchanged hover effect for overlay) */
+}
+
+/* Filtering Logic (Improved) */
+.photo-gallery .pic {
+  transform: scale(1); /* Ensure all images are initially scaled to 1 */
+  /* Targeting all images initially instead of opacity: 1 */
+}
+
+#check1:checked ~ .container .photo-gallery .pic {
+  /* No filtering for "All" checkbox */
+}
+
+#check2:checked ~ .container .photo-gallery .pic:not(.childhood),
+#check3:checked ~ .container .photo-gallery .pic:not(.teenage),
+#check4:checked ~ .container .photo-gallery .pic:not(.college) {
+  transform: scale(1); /* Hide non-matching images using negation */
+  opacity: 0; /* Additional opacity for smoother filtering (optional) */
+}
